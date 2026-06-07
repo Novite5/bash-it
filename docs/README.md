@@ -42,7 +42,7 @@ Stop polluting your `~/bin` directory and your `.bashrc` file, fork/clone Bash-i
 
 ## Installation
 
-1) Check out a clone of this repo to a location of your choice, such as
+1) Clone this repo to a location of your choice, such as
    ``git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it``
 2) Run ``~/.bash_it/install.sh``
 
@@ -51,9 +51,9 @@ That's it! :smiley:
 You can check out more components of Bash-it, and customize it to your desire.
 For more information, see detailed instructions [here](https://bash-it.readthedocs.io/en/latest/installation/).
 
-### custom configuration file location
+### Custom configuration file location
 
-By default the instller modifies/creates the actual ``~/.bashrc`` is updated.
+By default, the installer modifies/creates ``~/.bashrc`` in place. If a config file already exists, a backup will be made.
 If this is undesirable, you can create another file, by run the installer:
 ```bash
 BASH_IT_CONFIG_FILE=path/to/my/custom/location.bash ~/.bash_it/install.sh

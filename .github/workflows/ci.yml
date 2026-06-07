@@ -27,6 +27,10 @@ jobs:
         which parallel  # Verify installation
     - name: Test code
       run: test/run
+      env:
+        # Ubuntu runners ship GNU parallel, causing --tap + --jobs count mismatches.
+        # Force single-threaded on Linux; let macOS use parallel (installed above).
+        TEST_JOBS: ${{ runner.os == 'Linux' && '1' || 'detect' }}
 
   build-docs:
     runs-on: ubuntu-latest
