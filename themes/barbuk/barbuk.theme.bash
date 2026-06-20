@@ -246,7 +246,12 @@ function __docker_prompt() {
 		if [ -n "$DOCKER_CONTEXT" ]; then
 			docker_context="$DOCKER_CONTEXT"
 		elif [ -n "$DOCKER_HOST" ]; then
-			docker_context="$DOCKER_HOST"
+			if [[ $DOCKER_HOST = *podman.sock ]]; then
+				DOCKER_CHAR=" "
+				docker_context="podman"
+			else
+				docker_context="$DOCKER_HOST"
+			fi
 		elif [ -f .env ] && grep -qF COMPOSE_PROJECT_NAME .env; then
 			docker_context=$(awk -F'[ \t\n=]+' '/COMPOSE_PROJECT_NAME/ {print $2; exit}' .env)
 		fi
