@@ -210,7 +210,7 @@ function __uv_prompt() {
 }
 
 function __pre_commit_prompt() {
-	if [[ -f .pre-commit-config.yaml ]]; then
+	if [[ -f .pre-commit-config.yaml ]] || [[ -f .pre-commit-config.yml ]]; then
 		local icon="${PRE_COMMIT_CHAR}"
 		if [[ -f .git/hooks/pre-commit ]]; then
 			if grep -q "prek" .git/hooks/pre-commit 2> /dev/null; then
