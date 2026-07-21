@@ -287,12 +287,12 @@ function __powerline_last_status_prompt() {
 
 function __powerline_prompt_command() {
 	local last_status="$?" ## always the first
-	local beginning_of_line='\[\e[G\]'
 	local info prompt_color segment prompt
 
-	# Reversed % marks where a missing trailing newline was; \r\e[K then
-	# clears the line so the prompt always starts cleanly at column 1.
-	printf '%b' '\e[7m%\e[0m\r\e[K'
+	# If the previous command left output without a trailing newline, overflow
+	# the rest of the line with spaces so the terminal auto-wraps the cursor
+	# onto a fresh line before the prompt is drawn (mirrors zsh's PROMPT_SP).
+	printf '%*s\r' "$((${COLUMNS:-80} - 1))" ''
 
 	local LEFT_PROMPT=""
 	local SEGMENTS_AT_LEFT=0
@@ -334,5 +334,5 @@ function __powerline_prompt_command() {
 		prompt+=" "
 	fi
 
-	PS1="${beginning_of_line}${normal?}${LEFT_PROMPT}${prompt}"
+	PS1="${normal?}${LEFT_PROMPT}${prompt}"
 }
