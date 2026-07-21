@@ -235,5 +235,5 @@ function gdv() {
 
 function get_default_branch() {
 	branch=$(git symbolic-ref refs/remotes/origin/HEAD)
-	${branch#refs/remotes/origin/}
+	echo "${branch#refs/remotes/origin/}"
 }
