@@ -245,6 +245,6 @@ function get_default_branch() {
 	fi
 
 	if [ -n "$default_remote" ] && branch=$(git symbolic-ref --quiet --short refs/remotes/"${default_remote}"/HEAD); then
-		echo "${branch#${default_remote}/}"
+		echo "${branch#"${default_remote}"/}"
 	fi
 }
