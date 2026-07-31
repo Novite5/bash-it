@@ -28,13 +28,13 @@ function local_setup() {
 	assert_output "main"
 }
 
-@test "get_default_branch: returns master when origin points to master" {
+@test "get_default_branch: returns trunk when origin points to trunk" {
 	git remote add origin "https://github.com/test/repo.git"
-	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
+	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/trunk
 
 	run get_default_branch
 	assert_success
-	assert_output "master"
+	assert_output "trunk"
 }
 
 @test "get_default_branch: falls back to first remote when origin doesn't exist" {
@@ -63,20 +63,20 @@ function local_setup() {
 
 @test "get_default_branch: properly strips remote prefix from branch name" {
 	git remote add origin "https://github.com/test/repo.git"
-	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/develop
+	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/trunk
 
 	run get_default_branch
 	assert_success
-	assert_output "develop"
+	assert_output "trunk"
 }
 
 @test "get_default_branch: uses origin when both origin and another remote exist" {
 	git remote add upstream "https://github.com/upstream/repo.git"
 	git remote add origin "https://github.com/test/repo.git"
 	git symbolic-ref refs/remotes/upstream/HEAD refs/remotes/upstream/main
-	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
+	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/trunk
 
 	run get_default_branch
 	assert_success
-	assert_output "master"
+	assert_output "trunk"
 }
