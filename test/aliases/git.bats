@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Shine Nelson <bash-it@shinenelson.com>
+# SPDX-License-Identifier: MIT
+
 # shellcheck shell=bats
 
 load "${MAIN_BASH_IT_DIR?}/test/test_helper.bash"
