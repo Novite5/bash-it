@@ -289,6 +289,11 @@ function __powerline_prompt_command() {
 	local last_status="$?" ## always the first
 	local info prompt_color segment prompt
 
+	# If the previous command left output without a trailing newline, overflow
+	# the rest of the line with spaces so the terminal auto-wraps the cursor
+	# onto a fresh line before the prompt is drawn (mirrors zsh's PROMPT_SP).
+	printf '%*s\r' "$((${COLUMNS:-80} - 1))" ''
+
 	local LEFT_PROMPT=""
 	local SEGMENTS_AT_LEFT=0
 	local LAST_SEGMENT_COLOR=""
