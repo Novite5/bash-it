@@ -312,6 +312,12 @@ function __prompt-command() {
 	for segment in $BARBUK_PROMPT; do
 		local info
 		info="$(__"${segment}"_prompt)"
+		# Some segments (e.g. python_venv) can read values from files in the
+		# current directory (pyproject.toml, etc), which have no character
+		# restrictions, unlike a git ref name. Strip control characters
+		# before concatenating into PS1 so a crafted file can't inject
+		# terminal escape sequences into the prompt.
+		info="${info//[$'\x01'-$'\x1f'$'\x7f']/}"
 		[[ -n "${info}" ]] && PS1+="${info}"
 	done
 
