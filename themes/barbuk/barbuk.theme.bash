@@ -106,7 +106,7 @@ function __git-upstream-remote-logo_prompt() {
 
 function git_prompt_info() {
 	git_prompt_vars
-	echo -e "on $SCM_GIT_CHAR_ICON_BRANCH $SCM_PREFIX$SCM_BRANCH$SCM_STATE$SCM_GIT_AHEAD$SCM_GIT_BEHIND$SCM_GIT_STASH$SCM_SUFFIX "
+	echo "on $SCM_GIT_CHAR_ICON_BRANCH $SCM_PREFIX$SCM_BRANCH$SCM_STATE$SCM_GIT_AHEAD$SCM_GIT_BEHIND$SCM_GIT_STASH$SCM_SUFFIX "
 }
 
 function __exit_prompt() {
@@ -317,6 +317,7 @@ function __prompt-command() {
 	for segment in $BARBUK_PROMPT; do
 		local info
 		info="$(__"${segment}"_prompt)"
+		info="${info//[[:cntrl:]]/}"
 		[[ -n "${info}" ]] && PS1+="${info}"
 	done
 
