@@ -194,7 +194,12 @@ function __python_venv_prompt() {
 	elif [[ -n "${VIRTUAL_ENV_PROMPT:-}" ]]; then
 		python_info="${VIRTUAL_ENV_PROMPT}"
 	elif [[ -f pyproject.toml ]]; then
-		python_info=$(awk -F'"' '/^requires-python/ {print $2}' pyproject.toml)
+		# pyproject.toml has no character restrictions on this field, unlike a
+		# git ref name. Strip anything outside printable ASCII (raw control
+		# characters, e.g. terminal escape sequences) as well as literal
+		# backslash-letter escape sequences written as text (e.g. "\e]...\a"),
+		# which some shells/echo modes can still expand.
+		python_info=$(awk -F'"' '/^requires-python/ {gsub(/[^\40-\176]|\\[a-zA-Z]/, "", $2); print $2}' pyproject.toml)
 		[[ -z "${python_info}" ]] && python_info="py"
 	fi
 
