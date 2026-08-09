@@ -234,6 +234,17 @@ function gdv() {
 }
 
 function get_default_branch() {
-	branch=$(git symbolic-ref refs/remotes/origin/HEAD)
-	echo "${branch#refs/remotes/origin/}"
+	local default_remote branch
+
+	# Try origin first (most common)
+	if git remote | grep -q "^origin$"; then
+		default_remote="origin"
+	else
+		# Fall back to the first available remote
+		default_remote=$(git remote | head -n 1)
+	fi
+
+	if [ -n "$default_remote" ] && branch=$(git symbolic-ref --quiet --short refs/remotes/"${default_remote}"/HEAD); then
+		echo "${branch#"${default_remote}"/}"
+	fi
 }
